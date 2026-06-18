@@ -1,8 +1,24 @@
-## 🏗 Sistem Blok Mimarisi ve Veri Akışı
+## 🏗 Sistem Blok Şeması (RTL Mimarisi)-Project3--example
 
-Sistem içerisindeki sinyal akışı ve modüller arası hiyerarşi aşağıdaki şemada modellenmiştir:
+Aşağıdaki diyagram, hiyerarşik modül bağlantılarını ve donanım sinyal akışını göstermektedir:
 
 ```mermaid
+graph TD
+    subgraph top [Top Modül - Sistem Çerçevesi]
+        direction TB
+        
+        CLK([Sistem Saati - 27 MHz]) --> DIV
+        CLK --> KR
+        RST([Reset Butonu - rst_n]) --> DIV
+        RST --> KR
+        
+        DIV[clk_divider Modülü <br> Hedef: 50 Hz] -- "tick (Tetik Sinyali)" --> KR[knight_rider Modülü <br> W: 6 Bit]
+        
+        KR -- "led[5:0]" --> OUT([Fiziksel LED Pinleri])
+    end
+
+
+
 graph LR
     subgraph Girişler [Asenkron Giriş Birimleri]
         MZ80([MZ80 Sensör Girişi])
